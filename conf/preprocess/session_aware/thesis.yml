@@ -1,0 +1,25 @@
+type: single # single|window
+mode: session_aware # session_based | session_aware
+preprocessor: thesis # 
+data:
+  folder: data/thesis/raw/
+  prefix: thesis_113m
+
+filter:
+  min_item_support: 5
+  min_session_length: 2
+  min_user_sessions: 2
+  max_user_sessions: None
+  # repeat: False  # apply filters several times
+  # clean_test: True
+  # slices_num: 5 # Preprocess the test set
+  # slice_interval: 27  # total_interval = 139
+  # days_offset: 0
+
+
+params:
+  min_session_length: 2
+  
+
+output:
+  folder: data/thesis/prepared/

@@ -44,7 +44,7 @@ def main( conf ):
         except (KeyboardInterrupt, SystemExit):
                         
             print( 'manually aborted config ' + conf )            
-            raise
+            raise 
         
         except Exception:
             print( 'error for config ', file )

@@ -151,7 +151,7 @@ def prepare_data_session(train, test, sessions_train=None, sessions_test=None):
 
 
 def load_data_session_hdf(path, file, sessions_train=None, sessions_test=None, slice_num=None,
-                          train_eval=False):
+                          train_eval=False, session_key='SessionId', user_key='UserId', item_key='ItemId', time_key='Time'):
     '''
        [HDF5 format] Loads a tuple of training and test set with the given parameters.
 
@@ -203,8 +203,21 @@ def load_data_session_hdf(path, file, sessions_train=None, sessions_test=None, s
 
     sessions_path = os.path.join(path, file + split + '.hdf')
     train = pd.read_hdf(sessions_path, train_key)
+    train = train.rename(columns={
+        session_key: 'SessionId',
+        user_key: 'UserId',
+        item_key: 'ItemId',
+        time_key: 'Time'
+        # Add more columns here if needed
+    })
     test = pd.read_hdf(sessions_path, test_key)
-
+    test = test.rename(columns={
+        session_key: 'SessionId',
+        user_key: 'UserId',
+        item_key: 'ItemId',
+        time_key: 'Time'
+        # Add more columns here if needed
+    })
     train, test = prepare_data_session(train, test, sessions_train,
                                        sessions_test)  # (train, test, sessions_train=None, sessions_test=None)
 

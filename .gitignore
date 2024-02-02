@@ -89,7 +89,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
+testing.py
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -119,3 +119,4 @@ conf/out/*
 
 .idea
 /data/
+.env

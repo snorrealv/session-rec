@@ -14,7 +14,7 @@ RUN conda init bash
 
 # Activate the environment, and make sure it's activated:
 RUN echo "conda activate srec37" > ~/.bashrc
-RUN echo "Make sure flask is installed:"
+RUN echo "Make sure tensorfloe is installed:"
 RUN python -c "import tensorflow as tf"
 
 # The code to run when container is started:
