@@ -3,7 +3,7 @@ mode: session_aware # session_based | session_aware
 preprocessor: thesis # 
 data:
   folder: data/thesis/raw/
-  prefix: thesis_113m
+  prefix: thesis_12k
 
 filter:
   min_item_support: 5

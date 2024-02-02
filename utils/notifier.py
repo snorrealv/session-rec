@@ -5,9 +5,13 @@ class Notifyer():
         self.mode = mode
         try:
             module = importlib.import_module(f"utils.notifiers.{self.mode}")
+            print(module)
             self.notifier_instance = getattr(module, self.mode.capitalize())()
         except ModuleNotFoundError:
             raise ValueError(f"Notifier {self.mode} not found.")
+
+        except Exception as e:
+            raise e
 
     def send_message(self, message):
         self.notifier_instance.send_message(message)

@@ -16,7 +16,7 @@ import importlib
 import traceback
 import os
 
-def main( conf ): 
+def preprocess( conf ): 
     '''
     Execute experiments for the given configuration path
         --------
@@ -107,13 +107,13 @@ def ensure_dir(file_path):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-if __name__ == '__main__':
-    '''
-    Run the preprocessing configured above.
-    '''
+# if __name__ == '__main__':
+#     '''
+#     Run the preprocessing configured above.
+#     '''
     
-    if len( sys.argv ) == 2: 
-        main( sys.argv[1] ) # for example: conf/preprocess/window/rsc15.yml
-    else:
-        print( 'Preprocessing configuration expected.' )
+#     if len( sys.argv ) == 2: 
+#         main( sys.argv[1] ) # for example: conf/preprocess/window/rsc15.yml
+#     else:
+#         print( 'Preprocessing configuration expected.' )
     

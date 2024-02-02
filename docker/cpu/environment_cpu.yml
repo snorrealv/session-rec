@@ -5,6 +5,7 @@ channels:
   - mila-udem
 dependencies:
   - python=3.7
+  - requests
   - pip
   - scipy=1.6.2
   - python-dateutil=2.8.1
