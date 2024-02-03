@@ -2,6 +2,9 @@ services:
   server:
     build:
       context: .
+      dockerfile: Dockerfile  # Assuming your Dockerfile is named "Dockerfile"
+      args:
+        - IMAGE_NAME=session-rec
     ports:
       - 8000:8000
     env_file:

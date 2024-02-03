@@ -216,10 +216,9 @@ def rename_to_standard(data):
         ITEM_KEY: 'ItemId',
         TIME_KEY: 'Time'
     })
+    return data
 
 def load_data(file):
-    if file == None:
-        print(file)
     data = pd.read_csv(file + '.csv', header=0, sep=',')
     print('Building sessions')
     # remove rows with NA userId
@@ -231,7 +230,8 @@ def load_data(file):
     
     data_start = datetime.fromtimestamp(data[TIME_KEY].min(), timezone.utc)
     data_end = datetime.fromtimestamp(data[TIME_KEY].max(), timezone.utc)
-    data = rename_to_standard(data)
+    # data = rename_to_standard(data)
+    print(data.info())
     print('Original data\n\tEvents: {}\n\tUsers: {}\n\tSessions: {}\n\tItems: {}\n\tSpan: {} / {}\n\n'.
           format(len(data), data[USER_KEY].nunique(), data[SESSION_KEY].nunique(), data[ITEM_KEY].nunique(),
                  data_start.date().isoformat(),
