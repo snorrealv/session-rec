@@ -209,12 +209,17 @@ def filter_data(data, min_item_support=MINIMUM_OCCURRENCES_PER_ITEM, min_session
     return data
 
 
-# def rename_to_standard(data):
-#     data = data.rename(columns={
-#         ""
-#     })
+def rename_to_standard(data):
+    data = data.rename(columns={
+        SESSION_KEY: 'SessionId',
+        USER_KEY: 'UserId',
+        ITEM_KEY: 'ItemId',
+        TIME_KEY: 'Time'
+    })
 
 def load_data(file):
+    if file == None:
+        print(file)
     data = pd.read_csv(file + '.csv', header=0, sep=',')
     print('Building sessions')
     # remove rows with NA userId
@@ -226,7 +231,7 @@ def load_data(file):
     
     data_start = datetime.fromtimestamp(data[TIME_KEY].min(), timezone.utc)
     data_end = datetime.fromtimestamp(data[TIME_KEY].max(), timezone.utc)
-    # data = rename_to_standard(data)
+    data = rename_to_standard(data)
     print('Original data\n\tEvents: {}\n\tUsers: {}\n\tSessions: {}\n\tItems: {}\n\tSpan: {} / {}\n\n'.
           format(len(data), data[USER_KEY].nunique(), data[SESSION_KEY].nunique(), data[ITEM_KEY].nunique(),
                  data_start.date().isoformat(),

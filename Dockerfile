@@ -16,16 +16,16 @@ WORKDIR /app
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
 ARG UID=10001
-# RUN adduser \
-#     --disabled-password \
-#     --gecos "" \
-#     --home "/nonexistent" \
-#     --shell "/sbin/nologin" \
-#     --no-create-home \
-#     --uid "${UID}" \
-#     appuser
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    appuser
 
-RUN adduser -ms /bin/bash -u 1001 appuser
+
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
@@ -43,7 +43,7 @@ SHELL ["conda", "run", "-n", "srec37", "/bin/bash", "-c"]
 USER appuser
 
 # Copy the source code into the container.
-COPY . .
+# COPY . .
 
 # Expose the port that the application listens on.
 EXPOSE 8000
