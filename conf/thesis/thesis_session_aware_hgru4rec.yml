@@ -3,9 +3,9 @@ type: opt # single|window, maybe add opt
 key: hgru4rec #added to the csv names
 evaluation: evaluation_user_based #evaluation|evaluation_last|evaluation_multiple
 data:
-  name: tv2 #added in the end of the csv names
-  folder: data/tv2/prepared/
-  prefix: tv2_7m_kids
+  name: thesis #added in the end of the csv names
+  folder: data/thesis/prepared/
+  prefix: thesis_240k
   type: hdf # hdf|csv(default)
 #  slices: 5 #only window
 #  skip: [0,3] #only window
@@ -33,7 +33,7 @@ metrics:
 optimize:
   class: accuracy.MRR
   length: [20]
-  iterations: 100 #optional
+  iterations: 10 #optional
 
 algorithms:
 - class: hgru4rec.hgru4rec.HGRU4Rec

@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime, timezone, timedelta
 import subprocess
-
+from utils.notifier import Notifyer
 # data config (all methods)
 
 # file params
@@ -26,6 +26,8 @@ CLEAN_TEST = True
 SLICES_NUM = 5 # Preprocess the test set
 SLICE_INTERVAL = 27  # total_interval = 139
 DAYS_OFFSET = 0
+
+N = Notifyer(mode="slack")
 
 def prepare_time(data, time_key=TIME_KEY):
     """Assigns session ids to the events in data without grouping keys"""
@@ -110,6 +112,17 @@ def last_session_out_split(data, min_session_length):
     return train, test
 
 
+def check_validated(data):
+    if len(data) == 0:
+        error_message = f'No data passed validatoin, please reconsider attributes: \n \
+            Session Threshold: {SESSION_THRESHOLD}\n \
+            Minimum Occurrences Per Item: {MINIMUM_OCCURRENCES_PER_ITEM}\n \
+            Minimum Session Lenght: {MIN_SESSION_LENGTH} \n \
+            Minimum User Sessions: {MIN_USER_SESSIONS} \n \
+            Minimum User Sessions: {MAX_USER_SESSIONS} \n'
+        N.send_message(error_message)
+        raise AttributeError(error_message)
+
 def split_data(data, output_file, min_session_length, slice_id= None): #TODO: extend for supproting more than one sessions per use for test
     """
     assign the last session of every user to the test set and the remaining ones to the training set
@@ -136,7 +149,7 @@ def split_data(data, output_file, min_session_length, slice_id= None): #TODO: ex
 
     print('--------------------- Validation_training---:')
     data = train_valid_sessions
-    print(data) #SNORRE
+    check_validated(data)
     data_start = datetime.fromtimestamp(data[TIME_KEY].min(), timezone.utc)
     data_end = datetime.fromtimestamp(data[TIME_KEY].max(), timezone.utc)
     print('Validation_training data set\n\tEvents: {}\n\tUsers: {}\n\tSessions: {}\n\tItems: {}\n\tSpan: {} / {}\n\n'.
@@ -145,6 +158,7 @@ def split_data(data, output_file, min_session_length, slice_id= None): #TODO: ex
 
     print('--------------------- Validation_test---')
     data = valid_sessions
+    check_validated(data)
     data_start = datetime.fromtimestamp(data[TIME_KEY].min(), timezone.utc)
     data_end = datetime.fromtimestamp(data[TIME_KEY].max(), timezone.utc)
     print('Validation_test data set\n\tEvents: {}\n\tUsers: {}\n\tSessions: {}\n\tItems: {}\n\tSpan: {} / {}\n\n'.

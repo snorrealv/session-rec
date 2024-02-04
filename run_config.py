@@ -36,7 +36,7 @@ class SessionRec():
         self.N = Notifyer(mode=notify_mode)
         pass
 
-    def main(self, conf, out=None, s3: S3 = None):
+    def run(self, conf, out=None, s3: S3 = None):
         '''
         Execute experiments for the given configuration path
             --------
@@ -55,7 +55,7 @@ class SessionRec():
             print('Loading file')
             self.N.send_message('processing config ' + conf)
             stream = open(str(file))
-            c = yaml.load(stream)
+            c = yaml.safe_load(stream)
             stream.close()
 
             try:
@@ -72,7 +72,7 @@ class SessionRec():
 
             except Exception:
                 print('error for config ', list[0])
-                os.rename(list[0], out + '/' + file.name + str(time.time()) + '.error')
+                # os.rename(list[0], out + '/' + file.name + str(time.time()) + '.error')
                 self.N.send_exception('error for config ' + list[0])
                 traceback.print_exc()
 
@@ -118,7 +118,8 @@ class SessionRec():
                                 os.kill(os.getpid(), signal.SIGTERM)
 
 
-                            except Exception:
+                            except Exception as e:
+                                print(e)
                                 print('error for config ', list[0])
                                 os.rename(list[0], out + '/' + file.name + str(time.time()) + '.error')
                                 self.N.send_exception('error for config ' + list[0])
@@ -138,6 +139,9 @@ class SessionRec():
                     print('manually aborted')
                     self.N.send_message('manually aborted')
                     os.kill(os.getpid(), signal.SIGTERM)
+                
+                except Exception as e:
+                    print(e)
 
 
             else:

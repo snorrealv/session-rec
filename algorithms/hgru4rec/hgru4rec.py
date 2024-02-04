@@ -6,7 +6,8 @@
 import theano
 from theano import tensor as T
 from theano import function
-from theano.sandbox.rng_mrg import MRG_RandomStreams as RandomStreams
+from theano.sandbox.rng_mrg import MRG_RandomStream as RandomStreams
+# from theano.tensor.random.mrg import MRG_RandomStreams
 import numpy as np
 import pandas as pd
 from collections import OrderedDict

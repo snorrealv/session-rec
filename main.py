@@ -1,6 +1,7 @@
 from utils.notifier import Notifyer
 from utils.utils import assert_env_variables_set
 from run_preprocessing import preprocess
+from run_config import SessionRec
 import argparse
 
 def main():
@@ -15,14 +16,16 @@ def main():
 
     # Your application logic using the arguments
     try:
-        assert_env_variables_set(variables=["JOB", "CONFIG"])
+        # assert_env_variables_set(variables=["JOB", "CONFIG"])
     # Your application logic using the arguments
         if args.action == 'preprocess':
             if args.config:
                 preprocess(args.config)
             print("preprocess")
         elif args.action == 'run':
-            print("run")
+            srec = SessionRec(notify_mode="slack")
+
+            srec.run(args.config)
 
         if args.config:
             print(f"Config specified: {args.config}")

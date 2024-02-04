@@ -26,3 +26,5 @@ dependencies:
   - pytables=3.6.1
   - scikit-optimize=0.8.1
   - python-telegram-bot=13.5
+  - requests=2.28.1 
+  - pymc3=3.11.4
